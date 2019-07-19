@@ -1,8 +1,8 @@
 # musicnn-training
 
-In this repository you will find the Tensorflow code for training deep convolutional neural networks for music audio tagging.
+In this repository you will find the Tensorflow code for training deep convolutional neural networks for audio-tagging.
 
-We employed this code for traininc [musicnn](https://github.com/jordipons/musicnn/), a musically motivated convolutional neural network for music audio tagging.
+We employed this code for training [musicnn](https://github.com/jordipons/musicnn/), a musically motivated convolutional neural network for music audio tagging.
 
 Reference:
 ```
