@@ -3,9 +3,10 @@ from datetime import datetime
 from sklearn import metrics
 import warnings
 warnings.filterwarnings('ignore')
+import matplotlib.pyplot as plt
+
 
 def spectrogram_visualization(image,title=None):
-    import matplotlib.pyplot as plt
     plt.figure()
     plt.imshow(np.flipud(image.T),interpolation=None)
     plt.colorbar()
@@ -21,7 +22,8 @@ def get_epoch_time():
 
 
 def count_params(trainable_variables):
-    # to return number of trainable variables: tf.trainable_variables()
+    # to return number of trainable variables
+    # Example: shared.count_params(tf.trainable_variables()))
     return np.sum([np.prod(v.get_shape().as_list()) for v in trainable_variables])
 
 
@@ -48,7 +50,6 @@ def load_id2path(index_file):
 
 
 def auc_with_aggergated_predictions(pred_array, id_array, ids, id2gt): 
-
     # averaging probabilities -> one could also do majority voting
     y_pred = []
     y_true = []
@@ -65,6 +66,7 @@ def auc_with_aggergated_predictions(pred_array, id_array, ids, id2gt):
     return  np.mean(roc_auc), np.mean(pr_auc)
 
 
+## REMOVE!!! BE SURE IT GIVES EXACTLY THE SAME AS BELOW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def compute_roc_auc(true, estimated):
     '''
     AUC is computed at the tag level because there are many songs in the MTT having no annotations - zeros array.
@@ -83,7 +85,8 @@ def compute_roc_auc(true, estimated):
         else:
             print('WARNING: All 0s or 1s, can not compute AUC! Tag #'+str(count))
     return np.mean(aucs)
-    
+   
+
 def compute_auc(true,estimated):
     pr_auc=[]
     roc_auc=[]    

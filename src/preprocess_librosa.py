@@ -18,34 +18,21 @@ def compute_audio_repr(audio_file, audio_repr_file):
         audio_repr = audio
         audio_repr = np.expand_dims(audio_repr, axis=1)
 
-    elif config['spectrogram_type'] == 'cqt':
-        audio_repr = librosa.cqt(audio,
-                                 sr=sr,
-                                 hop_length=config['hop'],
-                                 n_bins=config['cqt_bins'],
-                                 real=False).T
-
     elif config['spectrogram_type'] == 'mel':
         audio_repr = librosa.feature.melspectrogram(y=audio, sr=sr,
                                                     hop_length=config['hop'],
                                                     n_fft=config['n_fft'],
                                                     n_mels=config['n_mels']).T
-
-    elif config['spectrogram_type'] == 'stft':
-        audio_repr = librosa.stft(y=audio, n_fft=config['n_fft']).T
-
     # Compute length
     print(audio_repr.shape)
     length = audio_repr.shape[0]
 
-    # Transform to float32 (GPUS work with this resolution)
+    # Transform to float16 (to save storage, and works the same)
     audio_repr = audio_repr.astype(np.float16)
 
     # Write results:
     with open(audio_repr_file, "wb") as f:
         pickle.dump(audio_repr, f)  # audio_repr shape: NxM
-    ## numpy is supposed to be faster than pickle ##
-    #np.save(audio_repr_file, audio_repr)  # audio_repr shape: NxM
 
     return length
 
@@ -115,8 +102,6 @@ if __name__ == '__main__':
     if config['machine_i'] == config['n_machines'] - 1:
         process_files(files_to_convert[int(len(files_to_convert) / config['n_machines']) * (config['machine_i']):])
         # we just save parameters once! In the last thread run by n_machine-1!
-        config['normalize_mean'] = None
-        config['normalize_std'] = None
         json.dump(config, open(config_file.DATA_FOLDER + config['audio_representation_folder'] + "config.json", "w"))
     else:
         first_index = int(len(files_to_convert) / config['n_machines']) * (config['machine_i'])

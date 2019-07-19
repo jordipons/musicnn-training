@@ -4,14 +4,15 @@ import time
 import subprocess
 import sys
 
-setups = ['ismir_1344', 'ismir_1344', 'ismir_1344']
+setups = ['spec', 'spec', 'spec']
 GPU = 0
 script = 'train.py' 
 
 if __name__ == '__main__':
     start = time.time()
     for stp in setups:
-        str_exec = 'CUDA_VISIBLE_DEVICES=' + str(GPU) + ' python3 ' + str(script) + ' ' + str(stp)
+        str_exec = 'CUDA_VISIBLE_DEVICES=' + str(GPU) + ' python ' + str(script) + ' ' + str(stp)
+        #str_exec = 'CUDA_VISIBLE_DEVICES=' + str(GPU) + ' python3 ' + str(script) + ' ' + str(stp)
         print(str_exec)
         
         try:

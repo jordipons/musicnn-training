@@ -25,3 +25,4 @@ src/*.swx
 src/*.save
 src/vggish_model.ckpt
 src/__pycache__/*.pyc
+env/*

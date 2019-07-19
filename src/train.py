@@ -33,6 +33,7 @@ def tf_define_model_and_cost(config):
             cost = cost + config['weight_decay']*lossL2
             print('L2 norm, weight decay!')
 
+    # print all trainable variables, for debugging
     model_vars = [v for v in tf.global_variables()]
     for variables in model_vars:
         print(variables)
@@ -46,29 +47,21 @@ def data_gen(id, audio_repr_path, gt, pack):
 
     # load audio representation -> audio_repr shape: NxM
     audio_rep = pickle.load(open(config_file.DATA_FOLDER + audio_repr_path, 'rb'))
-    #print(audio_rep.shape)
-    #print(audio_rep.dtype)
     if config['pre_processing'] == 'logEPS':
         audio_rep = np.log10(audio_rep + np.finfo(float).eps)
     elif  config['pre_processing'] == 'logC':
         audio_rep = np.log10(10000 * audio_rep + 1)
 
-    # zero-mean and one-var
-    if config['audio_rep']['normalize_mean'] is not None:
-        # default: None (defined in audio_representation.py)
-        # to normalize considering some data: run compute_mean_var.py
-        audio_rep = (audio_rep - config['audio_rep']['normalize_mean']) / config['audio_rep']['normalize_std']
-
     # let's deliver some data!
-    last_frame = int(audio_rep.shape[0]) - int(config['n_frames']) + 1
+    last_frame = int(audio_rep.shape[0]) - int(config['n_frames']) + 1 # THIS N_FRAMES SHOULD BE xINPUT?
     if sampling == 'random':
         for i in range(0, param_sampling):
             time_stamp = random.randint(0,last_frame-1)
-            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id)
+            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id) # THIS N_FRAMES SHOULD BE xINPUT?
 
     elif sampling == 'overlap_sampling':
         for time_stamp in range(0, last_frame, param_sampling):
-            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id)
+            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id) # THIS N_FRAMES SHOULD BE xINPUT?
 
 
 if __name__ == '__main__':
@@ -80,15 +73,19 @@ if __name__ == '__main__':
     args = parser.parse_args()
     config = config_file.config_sl[args.configuration]
 
-    # load config parameters used in 'audio_representation.py',
+    # load config parameters used in 'preprocess_librosa.py',
     config_json = config_file.DATA_FOLDER + config['audio_representation_folder'] + 'config.json'
     with open(config_json, "r") as f:
         params = json.load(f)
     config['audio_rep'] = params
 
     # set patch parameters
-    config['xInput'] = config['n_frames']
-    config['yInput'] = config['audio_rep']['n_mels']
+    if config['audio_rep']['type'] == 'waveform':
+        raise ValueError('Waveform-based training is not implemented')
+
+    elif config['audio_rep']['spectrogram_type'] == 'mel':
+        config['xInput'] = config['n_frames']
+        config['yInput'] = config['audio_rep']['n_mels']
 
     # load audio representation paths
     file_index = config_file.DATA_FOLDER + config['audio_representation_folder'] + 'index.tsv'
@@ -150,7 +147,7 @@ if __name__ == '__main__':
     train_batch_streamer = pescador.ZMQStreamer(train_batch_streamer)
 
     # pescador val: define streamer
-    val_pack = [config, 'overlap_sampling', config['n_frames'], False]
+    val_pack = [config, 'overlap_sampling', config['n_frames'], False] # THIS N_FRAMES SHOULD BE xINPUT?
     val_streams = [pescador.Streamer(data_gen, id, id2audio_repr_path[id], id2gt_val[id], val_pack) for id in ids_val]
     val_mux_stream = pescador.ChainMux(val_streams, mode='exhaustive')
     val_batch_streamer = pescador.Streamer(pescador.buffer_stream, val_mux_stream, buffer_size=config['val_batch_size'], partial=True)
