@@ -19,6 +19,11 @@ def model_number(x, is_training, config):
         return models_baselines.choi_small(x, is_training, config)
         # 450k params | ROC-AUC: 89.7 | PR-AUC: ? | VAL-COST: ?
 
+    elif config['model_number'] == 222:
+        print('\nMODEL: Choi small | NO DROPOUT | BN input')
+        return models_baselines.choi_small(x, is_training, config)
+        # 450k params | ROC-AUC: 89.7 | PR-AUC: ? | VAL-COST: ?
+
     elif config['model_number'] == 3:
         print('\nMODEL: Timbre | BN input')
         return models_baselines.timbre(x, is_training, config, num_filt=1)

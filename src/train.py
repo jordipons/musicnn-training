@@ -71,7 +71,7 @@ if __name__ == '__main__':
     parser.add_argument('configuration',
                         help='ID in the config_file dictionary')
     args = parser.parse_args()
-    config = config_file.config_sl[args.configuration]
+    config = config_file.config_train[args.configuration]
 
     # load config parameters used in 'preprocess_librosa.py',
     config_json = config_file.DATA_FOLDER + config['audio_representation_folder'] + 'config.json'

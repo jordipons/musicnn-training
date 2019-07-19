@@ -34,7 +34,7 @@ config_preprocess = {
 DATASET = 'mtt'
 #DATASET = 'msd'
 
-config_sl = {
+config_train = {
     'spec': {
         'name_run': '',
         # which data?
@@ -50,7 +50,7 @@ config_sl = {
         'param_train_sampling': 1,                # if mode_sampling='overlap_sampling': param_sampling=hop_size
                                                   # if mode_sampling='random': param_sampling=number of samples
         # learning parameters?
-        'model_number': 2,                        # number of the model as in models_sl.py
+        'model_number': 222,                        # number of the model as in models_sl.py
                                                   # 1: dieleman, 2: choi small, 3: timbreCNN (with n_frames=187)
         'load_model': None,                       # set to None or absolute path to the model
         'epochs': 600,                            # maximum number of epochs before stopping training
