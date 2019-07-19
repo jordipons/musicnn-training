@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import autopool as ap
 
 
 def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_backend, type):
@@ -41,7 +42,6 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
 
     elif 'autopool' in type:
         print('Auto-pool')
-        import autopool as ap
         tmp_pool = ap.AutoPool1D(axis=1)(feature_map)
         
     else:

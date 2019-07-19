@@ -7,7 +7,7 @@ import tensorflow as tf
 from tqdm import tqdm
 
 
-TEST_BATCH_SIZE = 8
+TEST_BATCH_SIZE = 64
 FILE_INDEX = config_file.DATA_FOLDER + 'audio_representation/'+config_file.DATASET+'__time-freq/index.tsv'
 FILE_GROUND_TRUTH_TEST = config_file.DATA_FOLDER + 'index/'+config_file.DATASET+'/test_gt_'+config_file.DATASET+'.tsv'
 
@@ -76,11 +76,12 @@ if __name__ == '__main__':
     print('Predictions computed, now evaluating..')
     roc_auc, pr_auc = shared.auc_with_aggergated_predictions(pred_array, id_array, ids, id2gt)
 
-    # print and store experiment results
+    # print experimental results
     print('\nExperiment: ' + str(models))
     print(config)
     print('ROC-AUC: ' + str(roc_auc))
     print('PR-AUC: ' + str(pr_auc))
+    # store experimental results
     to = open(experiment_folder + 'experiment.result', 'w')
     to.write('Experiment: ' + str(models))
     to.write('\nAUC: ' + str(roc_auc))

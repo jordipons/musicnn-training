@@ -53,15 +53,15 @@ def data_gen(id, audio_repr_path, gt, pack):
         audio_rep = np.log10(10000 * audio_rep + 1)
 
     # let's deliver some data!
-    last_frame = int(audio_rep.shape[0]) - int(config['n_frames']) + 1 # THIS N_FRAMES SHOULD BE xINPUT?
+    last_frame = int(audio_rep.shape[0]) - int(config['xInput']) + 1
     if sampling == 'random':
         for i in range(0, param_sampling):
             time_stamp = random.randint(0,last_frame-1)
-            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id) # THIS N_FRAMES SHOULD BE xINPUT?
+            yield dict(X = audio_rep[time_stamp : time_stamp+config['xInput'], : ], Y = gt, ID = id)
 
     elif sampling == 'overlap_sampling':
         for time_stamp in range(0, last_frame, param_sampling):
-            yield dict(X = audio_rep[time_stamp : time_stamp+config['n_frames'], : ], Y = gt, ID = id) # THIS N_FRAMES SHOULD BE xINPUT?
+            yield dict(X = audio_rep[time_stamp : time_stamp+config['xInput'], : ], Y = gt, ID = id)
 
 
 if __name__ == '__main__':
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     train_batch_streamer = pescador.ZMQStreamer(train_batch_streamer)
 
     # pescador val: define streamer
-    val_pack = [config, 'overlap_sampling', config['n_frames'], False] # THIS N_FRAMES SHOULD BE xINPUT?
+    val_pack = [config, 'overlap_sampling', config['xInput'], False]
     val_streams = [pescador.Streamer(data_gen, id, id2audio_repr_path[id], id2gt_val[id], val_pack) for id in ids_val]
     val_mux_stream = pescador.ChainMux(val_streams, mode='exhaustive')
     val_batch_streamer = pescador.Streamer(pescador.buffer_stream, val_mux_stream, buffer_size=config['val_batch_size'], partial=True)
@@ -177,7 +177,6 @@ if __name__ == '__main__':
         if i != 0:
             for train_batch in train_batch_streamer:
                 tf_start = time.time()
-                #print('Shape train_batch:',train_batch['X'].shape)
                 _, train_cost = sess.run([train_step, cost],
                                          feed_dict={x: train_batch['X'], y_: train_batch['Y'], lr: tmp_learning_rate, is_train: True})
                 array_train_cost.append(train_cost)

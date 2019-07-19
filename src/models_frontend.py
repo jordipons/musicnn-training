@@ -42,7 +42,6 @@ def musically_motivated_cnns(x, is_training, yInput, num_filt, type):
                           kernel_size=[32,1],
                           is_training=is_training)
 
-
     # choose the feature maps we want to use for the experiment
     if type == '7774timbraltemporal':
         return [f74, f77, s1, s2, s3]
