@@ -20,7 +20,7 @@ To preprocess the data, first set some `config_file.py` variables:
 - `DATA_FOLDER`, where you want to store all your intermediate files (see folders structure below).
 - `config_preprocess['audio_folder']`, where your dataset is located.
 
-Preprocess the data running `python preprocess_librosa.py mtt`. Note: the `mtt` config option is defined in `config_file.py` (`mtt` stands for MagnaTagATune).
+Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` config option is defined in `config_file.py`.
 
 After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`.
 
@@ -28,9 +28,9 @@ _*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is
 
 #### Train a model:
 
-Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. Note: the `spec` config option is defined in `config_file.py` (`spec` stands for spectrogram).
+Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` config option is defined in `config_file.py`.
 
-Once training is done, the resulting model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`.
+Once training is done, the trained model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`.
 
 To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626spec`
 
