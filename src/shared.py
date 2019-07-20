@@ -64,27 +64,6 @@ def auc_with_aggergated_predictions(pred_array, id_array, ids, id2gt):
     print('Predictions are averaged, now computing AUC..')
     roc_auc, pr_auc = compute_auc(y_true, y_pred)
     return  np.mean(roc_auc), np.mean(pr_auc)
-
-
-## REMOVE!!! BE SURE IT GIVES EXACTLY THE SAME AS BELOW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def compute_roc_auc(true, estimated):
-    '''
-    AUC is computed at the tag level because there are many songs in the MTT having no annotations - zeros array.
-    Input dimensions:
-    - true: #songs x #annotations    
-    - estimated: #songs x #outputNeurons
-    where #outputNeurons = #annotations
-    '''
-    aucs=[]
-    estimated = np.array(estimated)
-    true = np.array(true)
-    for count in range(estimated.shape[1]-1):
-        if np.min(true[:,count]) != np.max(true[:,count]):
-            auc = metrics.roc_auc_score(true[:,count],estimated[:,count])
-            aucs.append(auc)
-        else:
-            print('WARNING: All 0s or 1s, can not compute AUC! Tag #'+str(count))
-    return np.mean(aucs)
    
 
 def compute_auc(true,estimated):

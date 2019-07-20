@@ -22,7 +22,8 @@ def model_number(x, is_training, config):
     elif config['model_number'] == 222:
         print('\nMODEL: Choi small | NO DROPOUT | BN input')
         return models_baselines.choi_small(x, is_training, config)
-        # 450k params | ROC-AUC: 89.7 | PR-AUC: ? | VAL-COST: ?
+        # 40k params | ROC-AUC: 88.87 | PR-AUC: 35.02 | test cost: 0.1423
+        # Epoch 558, train cost 0.144353, val cost 0.137508, epoch-time 41s, 1563539681spec
 
     elif config['model_number'] == 3:
         print('\nMODEL: Timbre | BN input')
