@@ -24,7 +24,7 @@ Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` config
 
 After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`.
 
-_*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing in different machines, run `cat index* > index.tsv`.
+_*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, run `cat index* > index.tsv`.
 
 #### Train a model:
 
