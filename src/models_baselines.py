@@ -38,83 +38,55 @@ def dieleman(x, is_training, config):
     print('output: ' + str(output.get_shape))
     return output 
     
-
-def choi_no_dropout(x, is_training, config):
-    print('Input: ' + str(x.get_shape))
+def dieleman_bn(x, is_training, config):
+    print('DIELEMAN WITH BATCHORM -- Input: ' + str(x.get_shape))
     input_layer = tf.expand_dims(x, 3)
     bn_input = tf.layers.batch_normalization(input_layer, training=is_training)
 
-    conv1 = tf.layers.conv2d(inputs=bn_input,
-                             filters=32,
-                             kernel_size=[3, 3],
-                             padding='same',
-                             activation=tf.nn.relu,
-                             name='1CNN',
-                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_conv1 = tf.layers.batch_normalization(conv1, training=is_training)
-    pool1 = tf.layers.max_pooling2d(inputs=bn_conv1, pool_size=[4, 1], strides=[2, 2])
-    print('pool1: ' + str(pool1.get_shape))
+    conv1 = tf.layers.conv2d(inputs=bn_input, 
+    	                     filters=32, 
+    	                     kernel_size=[8, config['yInput']], 
+    	                     padding="valid", 
+    	                     activation=tf.nn.relu, 
+    	                     name='1cnnOut', 
+    	                     kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
+    conv1 = tf.layers.batch_normalization(conv1, training=is_training)
+    pool1 = tf.layers.max_pooling2d(inputs=conv1, pool_size=[4, 1], strides=[4, 1], name='1-pool')
+    pool1_rs = tf.reshape(pool1, [-1, int(pool1.shape[1]), int(pool1.shape[3]), 1])
+    print('\t\t' + str(pool1_rs.get_shape))
 
-    conv2 = tf.layers.conv2d(inputs=pool1,
-                             filters=32,
-                             kernel_size=[3, 3],
-                             padding='same',
-                             activation=tf.nn.relu,
-                             name='2CNN',
-                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_conv2 = tf.layers.batch_normalization(conv2, training=is_training)
-    pool2 = tf.layers.max_pooling2d(inputs=bn_conv2, pool_size=[2, 2], strides=[2, 2])
-    print('pool2: ' + str(pool2.get_shape))
+    conv2 = tf.layers.conv2d(inputs=pool1_rs, 
+    	                     filters=32, 
+    	                     kernel_size=[8, pool1_rs.shape[2]], 
+    	                     padding="valid", 
+    	                     activation=tf.nn.relu, 
+    	                     name='2cnnOut', 
+    	                     kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
+    conv2 = tf.layers.batch_normalization(conv2, training=is_training)
+    pool2 = tf.layers.max_pooling2d(inputs=conv2, pool_size=[4, 1], strides=[4, 1], name='2-pool')
+    flat_pool2 = tf.reshape(pool2,[-1,int(pool2.shape[1]*pool2.shape[2]*pool2.shape[3])]) # flatten
+    print('\t\t' + str(flat_pool2.shape))
 
-    conv3 = tf.layers.conv2d(inputs=pool2,
-                             filters=32,
-                             kernel_size=[3, 3],
-                             padding='same',
-                             activation=tf.nn.relu,
-                             name='3CNN',
-                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_conv3 = tf.layers.batch_normalization(conv3, training=is_training)
-    pool3 = tf.layers.max_pooling2d(inputs=bn_conv3, pool_size=[2, 2], strides=[2, 2])
-    print('pool3: ' + str(pool3.get_shape))
-
-    conv4 = tf.layers.conv2d(inputs=pool3,
-                             filters=32,
-                             kernel_size=[3, 3],
-                             padding='same',
-                             activation=tf.nn.relu,
-                             name='4CNN',
-                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_conv4 = tf.layers.batch_normalization(conv4, training=is_training)
-    pool4 = tf.layers.max_pooling2d(inputs=bn_conv4, pool_size=[2, 2], strides=[2, 2])
-    print('pool4: ' + str(pool4.get_shape))
-
-    conv5 = tf.layers.conv2d(inputs=pool4, 
-                             filters=32, 
-                             kernel_size=[3, 3], 
-                             padding='same', 
-                             activation=tf.nn.relu,
-                             name='5CNN', 
-                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_conv5 = tf.layers.batch_normalization(conv5, training=is_training)
-    pool5 = tf.layers.max_pooling2d(inputs=bn_conv5, pool_size=[4, 4], strides=[4, 4])
-    print('pool5: ' + str(pool5.get_shape))
-
-    flat_pool5 = tf.contrib.layers.flatten(pool5)
-    output = tf.layers.dense(inputs=flat_pool5,
-                            activation=None,
-                            units=config['num_classes_dataset'],
+    dense = tf.layers.dense(inputs=flat_pool2, 
+    	                    activation=tf.nn.relu, 
+    	                    units=100, 
                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    print('output: ' + str(output.get_shape))    
-    return output    
-
+    dense = tf.layers.batch_normalization(dense, training=is_training)
+    output = tf.layers.dense(inputs=dense, 
+    	                   activation=None, 
+    	                   units=config['num_classes_dataset'], 
+    	                   kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
+    print('output: ' + str(output.get_shape))
+    return output 
     
-def choi_small(x, is_training, config):
+    
+def vgg(x, is_training, config, num_filters=32):
     print('Input: ' + str(x.get_shape))
     input_layer = tf.expand_dims(x, 3)
     bn_input = tf.layers.batch_normalization(input_layer, training=is_training)
 
     conv1 = tf.layers.conv2d(inputs=bn_input,
-                             filters=32,
+                             filters=num_filters,
                              kernel_size=[3, 3],
                              padding='same',
                              activation=tf.nn.relu,
@@ -126,7 +98,7 @@ def choi_small(x, is_training, config):
 
     do_pool1 = tf.layers.dropout(pool1, rate=0.25, training=is_training)
     conv2 = tf.layers.conv2d(inputs=do_pool1,
-                             filters=32,
+                             filters=num_filters,
                              kernel_size=[3, 3],
                              padding='same',
                              activation=tf.nn.relu,
@@ -138,7 +110,7 @@ def choi_small(x, is_training, config):
 
     do_pool2 = tf.layers.dropout(pool2, rate=0.25, training=is_training)
     conv3 = tf.layers.conv2d(inputs=do_pool2,
-                             filters=32,
+                             filters=num_filters,
                              kernel_size=[3, 3],
                              padding='same',
                              activation=tf.nn.relu,
@@ -150,7 +122,7 @@ def choi_small(x, is_training, config):
 
     do_pool3 = tf.layers.dropout(pool3, rate=0.25, training=is_training)
     conv4 = tf.layers.conv2d(inputs=do_pool3,
-                             filters=32,
+                             filters=num_filters,
                              kernel_size=[3, 3],
                              padding='same',
                              activation=tf.nn.relu,
@@ -162,7 +134,7 @@ def choi_small(x, is_training, config):
 
     do_pool4 = tf.layers.dropout(pool4, rate=0.25, training=is_training)
     conv5 = tf.layers.conv2d(inputs=do_pool4, 
-                             filters=32, 
+                             filters=num_filters, 
                              kernel_size=[3, 3], 
                              padding='same', 
                              activation=tf.nn.relu,

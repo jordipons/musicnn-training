@@ -22,8 +22,7 @@ def get_epoch_time():
 
 
 def count_params(trainable_variables):
-    # to return number of trainable variables
-    # Example: shared.count_params(tf.trainable_variables()))
+    # to return number of trainable variables. Example: shared.count_params(tf.trainable_variables()))
     return np.sum([np.prod(v.get_shape().as_list()) for v in trainable_variables])
 
 

@@ -9,21 +9,25 @@ def model_number(x, is_training, config):
 
     ############### START BASELINES ###############
 
-    if config['model_number'] == 1:
+    if config['model_number'] == 0:
         print('\nMODEL: Dieleman | BN input')
         return models_baselines.dieleman(x, is_training, config)
-        # 66k params | ROC-AUC: 88.18 | PR-AUC: 32.62 | VAL-COST: 0.1399
+        # 66k params | ROC-AUC: 88.61 | PR-AUC: 34.13 | VAL-COST: 0.1390
+
+    if config['model_number'] == 1000:
+        print('\nMODEL: Dieleman | BN input')
+        return models_baselines.dieleman_bn(x, is_training, config)
+        # 66k params | ROC-AUC: 88.61 | PR-AUC: 34.13 | VAL-COST: 0.1390
+
+    elif config['model_number'] == 1:
+        print('\nMODEL: VGG 32 | BN input')
+        return models_baselines.vgg(x, is_training, config, 32)
+        # 40k params | ROC-AUC: 88.85 | PR-AUC: 34.85 | VAL-COST: 0.1373
 
     elif config['model_number'] == 2:
-        print('\nMODEL: Choi small | BN input')
-        return models_baselines.choi_small(x, is_training, config)
-        # 450k params | ROC-AUC: 89.7 | PR-AUC: ? | VAL-COST: ?
-
-    elif config['model_number'] == 222:
-        print('\nMODEL: Choi small | NO DROPOUT | BN input')
-        return models_baselines.choi_small(x, is_training, config)
-        # 40k params | ROC-AUC: 88.87 | PR-AUC: 35.02 | test cost: 0.1423
-        # Epoch 558, train cost 0.144353, val cost 0.137508, epoch-time 41s, 1563539681spec
+        print('\nMODEL: VGG 128 | BN input')
+        return models_baselines.vgg(x, is_training, config, 128)
+        # 605k params | ROC-AUC: 90.26 | PR-AUC: 38.19 | VAL-COST: 0.1343
 
     elif config['model_number'] == 3:
         print('\nMODEL: Timbre | BN input')
@@ -32,7 +36,7 @@ def model_number(x, is_training, config):
 
     ############### PROPOSED MODELS ###############
 
-    elif config['model_number'] == 13:
+    elif config['model_number'] == 10:
         print('\nMODEL: BN input > [7, 70%][7, 40%] + temporal > RESIDUAL > GLOBAL POOLING')
         frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=1.6, type='7774timbraltemporal')
         frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
@@ -43,7 +47,7 @@ def model_number(x, is_training, config):
         return backend.temporal_pooling(midend_features, is_training, 50, 200, type='globalpool')
         # 508k params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
 
-    elif config['model_number'] == 17:
+    elif config['model_number'] == 11:
         print('\nMODEL: BN input > [7, 70%][7, 40%] + temporal > DENSE > GLOBAL POOLING')
         frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=1.6, type='7774timbraltemporal')
         frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
@@ -54,7 +58,7 @@ def model_number(x, is_training, config):
         return backend.temporal_pooling(midend_features, is_training, 50, 200, type='globalpool')
         # 787k params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
 
-    elif config['model_number'] == 53:
+    elif config['model_number'] == 12:
         print('\nMODEL: BN input > [7, 40%] > DENSE > ATTENTION + POSITIONAL ENCODING')
         frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=4.5, type='74timbral')
         frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
@@ -65,7 +69,7 @@ def model_number(x, is_training, config):
         return backend.temporal_pooling(midend_features, is_training, 50, 200, type='attention_positional')
         # 2.4M params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
 
-    elif config['model_number'] == 23:
+    elif config['model_number'] == 13:
         print('\nMODEL: BN input > [7, 40%] > DENSE > AUTOPOOL')
         frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=4.5, type='74timbral')
         frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
@@ -76,7 +80,29 @@ def model_number(x, is_training, config):
         return backend.temporal_pooling(midend_features, is_training, 50, 200, type='autopool')
         # 636k params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
 
-    elif config['model_number'] == 36:
+    elif config['model_number'] == 130:
+        print('\nMODEL: BN input > [7, 40%] > DENSE > OWN AUTOPOOL')
+        frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=4.5, type='74timbral')
+        frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
+
+        midend_features_list = midend.dense_cnns(frontend_features, is_training, 64)
+        midend_features = tf.concat(midend_features_list, 2)  # dense connection: concatenate features from previous layers
+
+        return backend.temporal_pooling(midend_features, is_training, 50, 200, type='ownautopool')
+        # 636k params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
+
+    elif config['model_number'] == 1300:
+        print('\nMODEL: BN input > [7, 40%] > DENSE > TF AUTOPOOL')
+        frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=4.5, type='74timbral')
+        frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
+
+        midend_features_list = midend.dense_cnns(frontend_features, is_training, 64)
+        midend_features = tf.concat(midend_features_list, 2)  # dense connection: concatenate features from previous layers
+
+        return backend.temporal_pooling(midend_features, is_training, 50, 200, type='tfautopool')
+        # 636k params | ROC-AUC: ? | PR-AUC: ? | VAL-COST: ?
+
+    elif config['model_number'] == 14:
         print('\nMODEL: BN input > [7, 40%] > RESIDUAL > RNN')
         frontend_features_list = frontend.musically_motivated_cnns(x, is_training, config['audio_rep']['n_mels'], num_filt=1.6, type='7774timbraltemporal')
         frontend_features = tf.concat(frontend_features_list, 2) # concatnate features coming from the front-end
