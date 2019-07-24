@@ -38,24 +38,23 @@ To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626
 
 **Configuration** and preprocessing scripts:
 - `config_file.py`: file with all configurable parameters.
-- `preprocess.py`: pre-computes and stores the spectrograms.
+- `preprocess_librosa.py`: pre-computes and stores the spectrograms.
 
-Scripts for **training deep learning models** experiments:
+Scripts for **running deep learning experiments**:
 - `train.py`: run it to train your model. First set `config_sl` in `config_file.py`
 - `evaluate.py`: run it to evaluate the previously trained model.
 - `models.py`, `models_baselines.py`, `models_frontend.py`, `models_midend.py`, `models_backend.py`: scripts where the architectures are defined.
 
 **Auxiliar** scripts:
-- AUTOPOOL?!?!?!?!??!?!??!?!??!?!?!?!??!?!!!!!
-- `shared.py`:
-- `train_exec.py`:
+- `shared.py`: WRITE!!!!!!!!!!!!
+- `train_exec.py`: WRITE!!!!!!!!!!!!
 
 ## Folders structure
 
 - `/src`: folder containing previous scripts.
-- `/aux`: folder containing auxiliar additional scripts. These are used to generate the index files in `/data/index/`.
+- `/aux`: folder containing auxiliar additional scripts. These are used to generate the index files in `/data/index/`. EXLAIN???????
 - `/data`: where all intermediate files (spectrograms, results, etc.) will be stored. 
-- `/data/index/`: indexed files containing the correspondences between audio files and their ground truth.
+- `/data/index/`: indexed files containing the correspondences between audio files and their ground truth. WHICH DATASETS?????
 
 When running previous scripts, the following folders will be created:
 - `./data/audio_representation/`: where spectrogram patches are stored.
