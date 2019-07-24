@@ -26,7 +26,7 @@ After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/a
 
 _*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, run `cat index* > index.tsv`.
 
-#### Train a model:
+#### Train and evaluate a model:
 
 Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` config option is defined in `config_file.py`.
 
