@@ -32,7 +32,7 @@ Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES
 
 Once training is done, the trained model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`.
 
-To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626spec`
+To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626spec`.
 
 ## Scripts
 
