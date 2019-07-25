@@ -46,15 +46,15 @@ Scripts for **running deep learning experiments**:
 - `models.py`, `models_baselines.py`, `models_frontend.py`, `models_midend.py`, `models_backend.py`: scripts where the architectures are defined.
 
 **Auxiliar** scripts:
-- `shared.py`: WRITE!!!!!!!!!!!!
-- `train_exec.py`: WRITE!!!!!!!!!!!!
+- `shared.py`: script containing util functions (e.g., for plotting or loading files).
+- `train_exec.py`: script to successively run several pre-configured experiments.
 
 ## Folders structure
 
 - `/src`: folder containing previous scripts.
-- `/aux`: folder containing auxiliar additional scripts. These are used to generate the index files in `/data/index/`. EXLAIN???????
+- `/aux`: folder containing auxiliar additional scripts. These scripts are used to generate the index files for each dataset. The index files are already computed in `/data/index/`.
 - `/data`: where all intermediate files (spectrograms, results, etc.) will be stored. 
-- `/data/index/`: indexed files containing the correspondences between audio files and their ground truth. WHICH DATASETS?????
+- `/data/index/`: indexed files containing the correspondences between audio files and their ground truth. Index files for the `mtt` and `msd` are already provided.
 
 When running previous scripts, the following folders will be created:
 - `./data/audio_representation/`: where spectrogram patches are stored.
