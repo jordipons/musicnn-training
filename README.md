@@ -22,7 +22,7 @@ To preprocess the data, first set some `config_file.py` variables:
 
 Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` option is defined in `config_file.py`
 
-After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
+After running `preprocess_librosa.py`, the computed spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
 
 _*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, run `cat index* > index.tsv`
 
