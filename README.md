@@ -41,7 +41,7 @@ To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626
 - `preprocess_librosa.py`: pre-computes and stores the spectrograms.
 
 Scripts for **running deep learning experiments**:
-- `train.py`: run it to train your model. First set `config_sl` in `config_file.py`
+- `train.py`: run it to train your model. First set `config_train` in `config_file.py`
 - `evaluate.py`: run it to evaluate the previously trained model.
 - `models.py`, `models_baselines.py`, `models_frontend.py`, `models_midend.py`, `models_backend.py`: scripts where the architectures are defined.
 
