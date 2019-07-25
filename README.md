@@ -6,7 +6,7 @@ We employed this code for training [musicnn](https://github.com/jordipons/musicn
 
 
 ## Installation:
-Create a python 3 virtual environment and install dependencies `pip install -r requirements.txt`
+Create a python 3 virtual environment and install the dependencies `pip install -r requirements.txt`
 
 Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
 
@@ -20,19 +20,19 @@ To preprocess the data, first set some `config_file.py` variables:
 - `DATA_FOLDER`, where you want to store all your intermediate files (see folders structure below).
 - `config_preprocess['audio_folder']`, where your dataset is located.
 
-Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` config option is defined in `config_file.py`.
+Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` config option is defined in `config_file.py`
 
-After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`.
+After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
 
-_*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, run `cat index* > index.tsv`.
+_*Warning!*_ Rename `index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, run `cat index* > index.tsv`
 
 #### Train and evaluate a model:
 
-Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` config option is defined in `config_file.py`.
+Set `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` config option is defined in `config_file.py`
 
-Once training is done, the trained model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`.
+Once training is done, the trained model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`
 
-To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626spec`.
+To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626spec`
 
 ## Scripts
 
@@ -52,7 +52,7 @@ Scripts for **running deep learning experiments**:
 ## Folders structure
 
 - `/src`: folder containing previous scripts.
-- `/aux`: folder containing additional auxiliar scripts. These scripts are used to generate the index files for each dataset. The index files are already computed in `/data/index/`.
+- `/aux`: folder containing additional auxiliar scripts. These scripts are used to generate the index files for each dataset. The index files are already computed in `/data/index/`
 - `/data`: where all intermediate files (spectrograms, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing the correspondences between audio files and their ground truth. Index files for the  [MagnaTagATune](https://github.com/keunwoochoi/magnatagatune-list) dataset (`mtt`) and  the [Million Song Dataset](https://github.com/jongpillee/music_dataset_split/tree/master/MSD_split) (`msd`) are already provided. 
 
