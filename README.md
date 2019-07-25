@@ -37,7 +37,7 @@ To evaluate the model, run `CUDA_VISIBLE_DEVICES=0 python evaluate.py 1563524626
 
 ## Scripts
 
-**Configuration** and preprocessing scripts:
+**Configuration and preprocessing** scripts:
 - `config_file.py`: file with all configurable parameters.
 - `preprocess_librosa.py`: pre-computes and stores the spectrograms.
 
