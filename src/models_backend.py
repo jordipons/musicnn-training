@@ -66,7 +66,7 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
         print('Max/Avg pooling')
         max_pool = tf.reduce_max(feature_map, axis=1)
         avg_pool, var_pool = tf.nn.moments(feature_map, axes=[1])
-        tmp_pool = tf.concat([max_pool, avg_pool], 2)
+        tmp_pool = tf.concat([max_pool, avg_pool], 1)
 
     print('Temporal pooling: ' + str(tmp_pool.shape))
     # dense layer with droupout
