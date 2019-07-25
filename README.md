@@ -24,7 +24,8 @@ Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` option
 
 After running `preprocess_librosa.py`, the computed spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
 
-_*Warning!*_ Rename `../DATA_FOLDER/audio_representation/mtt__time-freq/index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, copy the files in the same direcotry and run `cat index* > index.tsv`
+_*Warning!*_  
+Rename `../DATA_FOLDER/audio_representation/mtt__time-freq/index_0.tsv` to `index.tsv`. This is because this script is parallelizable. In case you parallelized the pre-processing accross several machines, copy the files in the same direcotry and run `cat index* > index.tsv`
 
 #### Train and evaluate a model:
 
