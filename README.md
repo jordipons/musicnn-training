@@ -20,7 +20,7 @@ To preprocess the data, first set some `config_file.py` variables:
 - `DATA_FOLDER`, where you want to store all your intermediate files (see folders structure below).
 - `config_preprocess['audio_folder']`, where your dataset is located.
 
-Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` config option is defined in `config_file.py`
+Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` option is defined in `config_file.py`
 
 After running `preprocess_librosa.py`, mel-spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
 
