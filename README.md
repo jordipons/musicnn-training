@@ -52,7 +52,7 @@ Scripts for **running deep learning experiments**:
 ## Folders structure
 
 - `/src`: folder containing previous scripts.
-- `/aux`: folder containing auxiliar additional scripts. These scripts are used to generate the index files for each dataset. The index files are already computed in `/data/index/`.
+- `/aux`: folder containing additional auxiliar scripts. These scripts are used to generate the index files for each dataset. The index files are already computed in `/data/index/`.
 - `/data`: where all intermediate files (spectrograms, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing the correspondences between audio files and their ground truth. Index files for the  [MagnaTagATune](https://github.com/keunwoochoi/magnatagatune-list) dataset (`mtt`) and  the [Million Song Dataset](https://github.com/jongpillee/music_dataset_split/tree/master/MSD_split) (`msd`) are already provided. 
 
