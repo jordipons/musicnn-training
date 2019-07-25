@@ -29,7 +29,7 @@ Rename `../DATA_FOLDER/audio_representation/mtt__time-freq/index_0.tsv` to `inde
 
 #### Train and evaluate a model:
 
-Define the training parameters by setting the `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` config option is defined in `config_file.py`
+Define the training parameters by setting the `config_train` dictionary in `config_file.py`, and run `CUDA_VISIBLE_DEVICES=0 python train.py spec`. The `spec` option is defined in `config_file.py`
 
 Once training is done, the trained model is stored in, e.g.: `../DATA_FOLDER/experiments/1563524626spec/`
 
