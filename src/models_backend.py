@@ -40,17 +40,8 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
         # temporal pooling
         tmp_pool = tf.reduce_sum(weighted, axis=1)
 
-    elif 'ownautopool' in type:
-        print('SELF-IMPLEMENTED Auto-pool')
-        alpha = tf.Variable(tf.constant(0, dtype=tf.float32), name='alpha', trainable=True)
-        scaled = tf.scalar_mul(alpha,feature_map)
-        max_val = tf.keras.backend.max(scaled, axis=1, keepdims=True)
-        softmax = tf.keras.backend.exp(scaled - max_val)
-        weights = softmax / tf.keras.backend.sum(softmax, axis=1, keepdims=True)
-        tmp_pool = tf.keras.backend.sum(feature_map * weights, axis=1, keepdims=False)
-
-    elif 'tfautopool' in type:
-        print('TF-IMPLEMENTED Auto-pool')
+    elif 'autopool' in type:
+        print('Auto-pool')
         alpha = tf.Variable(tf.constant(0, dtype=tf.float32), name='alpha', trainable=True)
         scaled = tf.scalar_mul(alpha,feature_map)
         max_val = tf.reduce_max(scaled, axis=1, keepdims=True)
@@ -58,10 +49,6 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
         weights = softmax / tf.reduce_sum(softmax, axis=1, keepdims=True)
         tmp_pool = tf.reduce_sum(feature_map * weights, axis=1, keepdims=False)
 
-    elif 'autopool' in type:
-        print('Auto-pool')
-        tmp_pool = ap.AutoPool1D(axis=1)(feature_map)
-        
     else:
         print('Max/Avg pooling')
         max_pool = tf.reduce_max(feature_map, axis=1)

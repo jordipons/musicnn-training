@@ -6,7 +6,7 @@ import sys
 
 setups = ['spec', 'spec', 'spec']
 GPU = 0
-script = 'train.py' 
+script = 'train.py'
 
 if __name__ == '__main__':
     start = time.time()

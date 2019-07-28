@@ -50,7 +50,7 @@ config_train = {
         'param_train_sampling': 1,                # if mode_sampling='overlap_sampling': param_sampling=hop_size
                                                   # if mode_sampling='random': param_sampling=number of samples
         # learning parameters?
-        'model_number': 11,                       # number of the model as in models.py
+        'model_number': 1000,                       # number of the model as in models.py
         'load_model': None,                       # set to None or absolute path to the model
         'epochs': 600,                            # maximum number of epochs before stopping training
         'batch_size': 32,                         # batch size during training
