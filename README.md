@@ -6,9 +6,11 @@ We employed this code for training [musicnn](https://github.com/jordipons/musicn
 
 
 ## Installation:
-Create a python 3 virtual environment and install the dependencies `pip install -r requirements.txt`
+`git clone https://github.com/jordipons/musicnn-training.git`
 
-Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
+Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`
+
+Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu` (preferrably tensorflow 1.13)
 
 ## Usage
 
@@ -20,7 +22,7 @@ To preprocess the data, first set some `config_file.py` variables:
 - `DATA_FOLDER`, where you want to store all your intermediate files (see folders structure below).
 - `config_preprocess['audio_folder']`, where your dataset is located.
 
-Preprocess the data running `python preprocess_librosa.py mtt`. The `mtt` option is defined in `config_file.py`
+Preprocess the data acessing to `src/` and running `python preprocess_librosa.py mtt_spec`. The `mtt_spec` option is defined in `config_file.py`
 
 After running `preprocess_librosa.py`, the computed spectrograms are in `../DATA_FOLDER/audio_representation/mtt__time-freq/`
 
