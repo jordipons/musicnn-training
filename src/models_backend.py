@@ -9,8 +9,7 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
 
     if 'rnn' in type: 
         print('Recurrent Neural Networks')
-        reshaped = tf.squeeze(feature_map, [3])
-        rnn = tf.keras.layers.CuDNNLSTM(512, return_sequences=True, name='lstm1')(reshaped)
+        rnn = tf.keras.layers.CuDNNLSTM(512, return_sequences=True, name='lstm1')(feature_map)
         tmp_pool = tf.keras.layers.CuDNNLSTM(512, return_sequences=False, name='lstm2')(rnn)
 
     elif 'attention' in type: 
