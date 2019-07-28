@@ -28,6 +28,7 @@ def evaluation(batch_dispatcher, tf_vars, array_cost, pred_array, id_array):
     print('cost', np.mean(array_cost))   
     return array_cost, pred_array, id_array
     
+
 if __name__ == '__main__':
 
     # which experiment we want to evaluate?

@@ -43,6 +43,7 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
     elif 'autopool' in type:
         print('Auto-pool')
         alpha = tf.Variable(tf.constant(0, dtype=tf.float32), name='alpha', trainable=True)
+        # alpha initialized to 0, which is the safest option. 1 could also be an interesting initialization!
         scaled = tf.scalar_mul(alpha,feature_map)
         max_val = tf.reduce_max(scaled, axis=1, keepdims=True)
         softmax = tf.exp(scaled - max_val)

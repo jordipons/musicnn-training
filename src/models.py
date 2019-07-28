@@ -8,15 +8,11 @@ import models_baselines
 def model_number(x, is_training, config):
 
     ############### START BASELINES ###############
+    #     dieleman < vgg32 < timbre < vgg128      #
 
     if config['model_number'] == 0:
         print('\nMODEL: Dieleman | BN input')
         return models_baselines.dieleman(x, is_training, config)
-        # 66k params | ROC-AUC: 88.61 | PR-AUC: 34.13 | VAL-COST: 0.1390
-
-    if config['model_number'] == 1000: ######################################################## REMOVE
-        print('\nMODEL: Dieleman Batchnormed! | BN input')
-        return models_baselines.dieleman_bn(x, is_training, config)
         # 66k params | ROC-AUC: 88.61 | PR-AUC: 34.13 | VAL-COST: 0.1390
 
     elif config['model_number'] == 1:
@@ -32,9 +28,11 @@ def model_number(x, is_training, config):
     elif config['model_number'] == 3:
         print('\nMODEL: Timbre | BN input')
         return models_baselines.timbre(x, is_training, config, num_filt=1)
-        # 185k params | ROC-AUC: 89.57 | PR-AUC: ? | VAL-COST: ?
+        # 185k params | ROC-AUC: 89.28 | PR-AUC: 35.38 | VAL-COST: 0.1368
 
-    ############### PROPOSED MODELS ###############
+
+    ############################## PROPOSED MODELS ##################################
+    # rnn < vgg128 < global pooling < global pooling (dense) < autopool < attention #
 
     elif config['model_number'] == 10:
         print('\nMODEL: BN input > [7, 70%][7, 40%] + temporal > RESIDUAL > GLOBAL POOLING')
@@ -57,7 +55,6 @@ def model_number(x, is_training, config):
 
         return backend.temporal_pooling(midend_features, is_training, 50, 200, type='globalpool')
         # 787k params | ROC-AUC: 90.69 | PR-AUC: 38.44 | VAL-COST: 0.1304
-
 
     elif config['model_number'] == 12:
         print('\nMODEL: BN input > [7, 40%] > DENSE > ATTENTION + POSITIONAL ENCODING')

@@ -38,47 +38,6 @@ def dieleman(x, is_training, config):
     print('output: ' + str(output.get_shape))
     return output 
     
-def dieleman_bn(x, is_training, config):
-    print('DIELEMAN WITH BATCHORM -- Input: ' + str(x.get_shape))
-    input_layer = tf.expand_dims(x, 3)
-    bn_input = tf.layers.batch_normalization(input_layer, training=is_training)
-
-    conv1 = tf.layers.conv2d(inputs=bn_input, 
-    	                     filters=32, 
-    	                     kernel_size=[8, config['yInput']], 
-    	                     padding="valid", 
-    	                     activation=tf.nn.relu, 
-    	                     name='1cnnOut', 
-    	                     kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    conv1 = tf.layers.batch_normalization(conv1, training=is_training)
-    pool1 = tf.layers.max_pooling2d(inputs=conv1, pool_size=[4, 1], strides=[4, 1], name='1-pool')
-    pool1_rs = tf.reshape(pool1, [-1, int(pool1.shape[1]), int(pool1.shape[3]), 1])
-    print('\t\t' + str(pool1_rs.get_shape))
-
-    conv2 = tf.layers.conv2d(inputs=pool1_rs, 
-    	                     filters=32, 
-    	                     kernel_size=[8, pool1_rs.shape[2]], 
-    	                     padding="valid", 
-    	                     activation=tf.nn.relu, 
-    	                     name='2cnnOut', 
-    	                     kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    conv2 = tf.layers.batch_normalization(conv2, training=is_training)
-    pool2 = tf.layers.max_pooling2d(inputs=conv2, pool_size=[4, 1], strides=[4, 1], name='2-pool')
-    flat_pool2 = tf.reshape(pool2,[-1,int(pool2.shape[1]*pool2.shape[2]*pool2.shape[3])]) # flatten
-    print('\t\t' + str(flat_pool2.shape))
-
-    dense = tf.layers.dense(inputs=flat_pool2, 
-    	                    activation=tf.nn.relu, 
-    	                    units=100, 
-                            kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    dense = tf.layers.batch_normalization(dense, training=is_training)
-    output = tf.layers.dense(inputs=dense, 
-    	                   activation=None, 
-    	                   units=config['num_classes_dataset'], 
-    	                   kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    print('output: ' + str(output.get_shape))
-    return output 
-    
     
 def vgg(x, is_training, config, num_filters=32):
     print('Input: ' + str(x.get_shape))

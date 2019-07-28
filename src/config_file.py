@@ -50,14 +50,14 @@ config_train = {
         'param_train_sampling': 1,                # if mode_sampling='overlap_sampling': param_sampling=hop_size
                                                   # if mode_sampling='random': param_sampling=number of samples
         # learning parameters?
-        'model_number': 1000,                       # number of the model as in models.py
+        'model_number': 11,                       # number of the model as in models.py
         'load_model': None,                       # set to None or absolute path to the model
         'epochs': 600,                            # maximum number of epochs before stopping training
         'batch_size': 32,                         # batch size during training
         'weight_decay': 1e-5,                     # None or value for the regularization parameter
         'learning_rate': 0.001,                   # learning rate
         'optimizer': 'Adam',                      # 'SGD_clip', 'SGD', 'Adam'
-        'patience': 75,                           # divide by two the learning rate after # of 'patience' epochs (integer)
+        'patience': 75,                           # divide by two the learning rate after the number of 'patience' epochs (integer)
 
         # experiment settings?
         'num_classes_dataset': 50,
