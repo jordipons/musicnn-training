@@ -1,6 +1,5 @@
 import tensorflow as tf
 import numpy as np
-import autopool as ap
 
 
 def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_backend, type):
