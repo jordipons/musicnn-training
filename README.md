@@ -10,7 +10,7 @@ We employed this code for training [musicnn](https://github.com/jordipons/musicn
 
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`
 
-Install tensorflow for CPU `pip install tensorflow==1.14.0` or for CUDA-enabled GPU `pip install tensorflow-gpu==1.14.0` (code NOT tested for tensorflow 2)
+Install tensorflow for CPU `pip install tensorflow==1.14.0` or for CUDA-enabled GPU `pip install tensorflow-gpu==1.14.0`
 
 ## Usage
 
