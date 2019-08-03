@@ -3,7 +3,7 @@ DATA_FOLDER = '/home/idrojsnop/Github/musicnn-training/data/'  # set your data f
 config_preprocess = {
     'mtt_spec': {
         'identifier': 'mtt',                      # name for easy identification
-        'audio_folder': '/home/idrojsnop/Music/mtt/', # end it with / -> this is an absolute path!
+        'audio_folder': '/home/jpons/audio/mtt/', # end it with / -> this is an absolute path!
         'n_machines': 1,                          # parallelizing this process through 'n_machines'
         'machine_i': 0,                           # id number of the machine which is running this script (from 0 to n_machines-1)
         'num_processing_units': 20,               # number of parallel processes in every machine
@@ -50,7 +50,7 @@ config_train = {
         'param_train_sampling': 1,                # if mode_sampling='overlap_sampling': param_sampling=hop_size
                                                   # if mode_sampling='random': param_sampling=number of samples
         # learning parameters?
-        'model_number': 11,                       # number of the model as in models.py
+        'model_number': 14,                       # number of the model as in models.py
         'load_model': None,                       # set to None or absolute path to the model
         'epochs': 600,                            # maximum number of epochs before stopping training
         'batch_size': 32,                         # batch size during training

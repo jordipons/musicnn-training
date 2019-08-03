@@ -24,7 +24,7 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
         # compute attention
         context=3
         padded = tf.pad(feature_map, [[0, 0], [int(context/2), int(context/2)], [0, 0]], "CONSTANT")
-        frames_attention = tf.layers.conv1d(inputs=padded,
+        frames_attention = tf.compat.v1.layers.conv1d(inputs=padded,
                              filters=padded.shape[2],
                              kernel_size=context,
                              padding="valid",
@@ -57,17 +57,17 @@ def temporal_pooling(feature_map, is_training, num_classes_dataset, num_units_ba
     print('Temporal pooling: ' + str(tmp_pool.shape))
     # dense layer with droupout
     flat_pool = tf.contrib.layers.flatten(tmp_pool)
-    flat_pool = tf.layers.batch_normalization(flat_pool, training=is_training)
+    flat_pool = tf.compat.v1.layers.batch_normalization(flat_pool, training=is_training)
     flat_pool_dropout = tf.layers.dropout(flat_pool, rate=0.5, training=is_training)
-    dense = tf.layers.dense(inputs=flat_pool_dropout,
+    dense = tf.compat.v1.layers.dense(inputs=flat_pool_dropout,
                             units=num_units_backend,
                             activation=tf.nn.relu,
                             kernel_initializer=tf.contrib.layers.variance_scaling_initializer())
-    bn_dense = tf.layers.batch_normalization(dense, training=is_training)
+    bn_dense = tf.compat.v1.layers.batch_normalization(dense, training=is_training)
 
     # output layer
-    dense_dropout = tf.layers.dropout(bn_dense, rate=0.5, training=is_training)
-    return tf.layers.dense(inputs=dense_dropout,
+    dense_dropout = tf.compat.v1.layers.dropout(bn_dense, rate=0.5, training=is_training)
+    return tf.compat.v1.layers.dense(inputs=dense_dropout,
                            activation=None,
                            units=num_classes_dataset,
                            kernel_initializer=tf.contrib.layers.variance_scaling_initializer())

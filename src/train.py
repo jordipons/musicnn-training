@@ -15,9 +15,9 @@ from tensorflow.python.framework import ops
 def tf_define_model_and_cost(config):
     # tensorflow: define the model
     with tf.name_scope('model'):
-        x = tf.placeholder(tf.float32, [None, config['xInput'], config['yInput']])
-        y_ = tf.placeholder(tf.float32, [None, config['num_classes_dataset']])
-        is_train = tf.placeholder(tf.bool)
+        x = tf.compat.v1.placeholder(tf.float32, [None, config['xInput'], config['yInput']])
+        y_ = tf.compat.v1.placeholder(tf.float32, [None, config['num_classes_dataset']])
+        is_train = tf.compat.v1.placeholder(tf.bool)
         y = models.model_number(x, is_train, config)
         normalized_y = tf.nn.sigmoid(y)
         print(normalized_y.get_shape())

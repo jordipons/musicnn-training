@@ -3,7 +3,7 @@ import tensorflow as tf
 def musically_motivated_cnns(x, is_training, yInput, num_filt, type):
 
     expanded_layer = tf.expand_dims(x, 3)
-    input_layer = tf.layers.batch_normalization(expanded_layer, training=is_training)
+    input_layer = tf.compat.v1.layers.batch_normalization(expanded_layer, training=is_training)
 
     input_pad_7 = tf.pad(input_layer, [[0, 0], [3, 3], [0, 0], [0, 0]], "CONSTANT")
 
@@ -52,13 +52,13 @@ def musically_motivated_cnns(x, is_training, yInput, num_filt, type):
 
 def timbral_block(inputs, filters, kernel_size, is_training, padding="valid", activation=tf.nn.relu):
 
-    conv = tf.layers.conv2d(inputs=inputs,
+    conv = tf.compat.v1.layers.conv2d(inputs=inputs,
                             filters=filters,
                             kernel_size=kernel_size,
                             padding=padding,
                             activation=activation)
-    bn_conv = tf.layers.batch_normalization(conv, training=is_training)
-    pool = tf.layers.max_pooling2d(inputs=bn_conv,
+    bn_conv = tf.compat.v1.layers.batch_normalization(conv, training=is_training)
+    pool = tf.compat.v1.layers.max_pooling2d(inputs=bn_conv,
                                    pool_size=[1, bn_conv.shape[2]],
                                    strides=[1, bn_conv.shape[2]])
     return tf.squeeze(pool, [2])
@@ -66,13 +66,13 @@ def timbral_block(inputs, filters, kernel_size, is_training, padding="valid", ac
 
 def tempo_block(inputs, filters, kernel_size, is_training, padding="same", activation=tf.nn.relu):
 
-    conv = tf.layers.conv2d(inputs=inputs,
+    conv = tf.compat.v1.layers.conv2d(inputs=inputs,
                             filters=filters,
                             kernel_size=kernel_size,
                             padding=padding,
                             activation=activation)
-    bn_conv = tf.layers.batch_normalization(conv, training=is_training)
-    pool = tf.layers.max_pooling2d(inputs=bn_conv,
+    bn_conv = tf.compat.v1.layers.batch_normalization(conv, training=is_training)
+    pool = tf.compat.v1.layers.max_pooling2d(inputs=bn_conv,
                                    pool_size=[1, bn_conv.shape[2]],
                                    strides=[1, bn_conv.shape[2]])
     return tf.squeeze(pool, [2])
