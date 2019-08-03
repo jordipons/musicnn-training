@@ -1,4 +1,4 @@
-DATA_FOLDER = '/home/idrojsnop/Github/musicnn-training/data/'  # set your data folder
+DATA_FOLDER = '/home/jpons/Github/musicnn-training/data/'  # set your data folder
 
 config_preprocess = {
     'mtt_spec': {
@@ -50,7 +50,7 @@ config_train = {
         'param_train_sampling': 1,                # if mode_sampling='overlap_sampling': param_sampling=hop_size
                                                   # if mode_sampling='random': param_sampling=number of samples
         # learning parameters?
-        'model_number': 14,                       # number of the model as in models.py
+        'model_number': 11,                       # number of the model as in models.py
         'load_model': None,                       # set to None or absolute path to the model
         'epochs': 600,                            # maximum number of epochs before stopping training
         'batch_size': 32,                         # batch size during training
