@@ -4,17 +4,6 @@ from sklearn import metrics
 import warnings
 warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
-
-
-def spectrogram_visualization(image,title=None):
-    plt.figure()
-    plt.imshow(np.flipud(image.T),interpolation=None)
-    plt.colorbar()
-    if title!=None:
-        plt.title(title)
-    else:
-        title=str(get_epoch_time())
-    plt.savefig(title + '.png')
     
 
 def get_epoch_time():
