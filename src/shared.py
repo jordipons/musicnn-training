@@ -3,8 +3,7 @@ from datetime import datetime
 from sklearn import metrics
 import warnings
 warnings.filterwarnings('ignore')
-import matplotlib.pyplot as plt
-    
+
 
 def get_epoch_time():
     return int((datetime.now() - datetime(1970,1,1)).total_seconds())
