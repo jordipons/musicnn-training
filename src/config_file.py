@@ -31,8 +31,7 @@ config_preprocess = {
     }
 }
 
-DATASET = 'mtt'
-#DATASET = 'msd'
+DATASET = 'mtt' # 'mtt' or 'msd'
 
 config_train = {
     'spec': {
