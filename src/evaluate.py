@@ -45,9 +45,13 @@ if __name__ == '__main__':
     [ids, id2gt] = shared.load_id2gt(FILE_GROUND_TRUTH_TEST)
     print('# Test set', len(ids))
 
+    graphs = []
+    for i in range(len(models)):
+        graphs.append(tf.Graph())
+
     array_cost, pred_array, id_array = [], None, None
 
-    for model in models:
+    for i, model in enumerate(models):
 
         experiment_folder = config_file.DATA_FOLDER + 'experiments/' + str(model) + '/'
         config = json.load(open(experiment_folder + 'config.json'))
@@ -62,8 +66,7 @@ if __name__ == '__main__':
         batch_streamer = pescador.ZMQStreamer(batch_streamer)    
 
         # tensorflow: define model and cost
-        fuckin_graph = tf.Graph()
-        with fuckin_graph.as_default():
+        with graphs[i].as_default():
             sess = tf.Session()
             [x, y_, is_train, y, normalized_y, cost] = train.tf_define_model_and_cost(config)
             sess.run(tf.global_variables_initializer())

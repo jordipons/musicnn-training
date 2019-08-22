@@ -1,4 +1,4 @@
-DATA_FOLDER = '/home/jpons/Github/musicnn-training/data/'  # set your data folder
+DATA_FOLDER =  '/home/jpons/musicnn-training/data/' # set your data folder
 
 config_preprocess = {
     'mtt_spec': {
