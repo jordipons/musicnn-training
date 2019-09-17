@@ -63,7 +63,7 @@ When running previous scripts, the following folders will be created:
 - `./data/audio_representation/`: where spectrogram patches are stored.
 - `./data/experiments/`: where the results of the experiments are stored.
 
-## Reference:
+## References:
 ```
 @inproceedings{pons2018atscale,
   title={End-to-end learning for music audio tagging at scale},
@@ -71,4 +71,13 @@ When running previous scripts, the following folders will be created:
   booktitle={19th International Society for Music Information Retrieval Conference (ISMIR2018)},
   year={2018},
 }
+```
+```
+@inproceedings{pons2019musicnn,
+  title={musicnn: pre-trained convolutional neural networks for music audio tagging},
+  author={Pons, Jordi and Serra, Xavier},
+  booktitle={Late-breaking/demo session in 20th International Society for Music Information Retrieval Conference (LBD-ISMIR2019)},
+  year={2019},
+}
+
 ```
